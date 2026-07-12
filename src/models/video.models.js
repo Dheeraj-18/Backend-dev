@@ -7,11 +7,11 @@ const videoSchema = new Schema(
       type: String, // cloudinary url
       required: true,
     },
-    thumbnail: {
+    thumbnail: {  // cloudinary url 
       type: String,
       require: true,
     },
-    title: {
+    title: {  // cloudinary url 
       type: String,
       require: true,
     },
@@ -19,7 +19,7 @@ const videoSchema = new Schema(
       type: String,
       require: true,
     },
-    duration: {
+    duration: {  // cloudinary url 
       type: Number,
       required: true,
     },
