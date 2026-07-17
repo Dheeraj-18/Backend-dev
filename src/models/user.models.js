@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
     ],
     password: {
       type: String,
-      require: [true, 'Password is required'],
+      required: [true, 'Password is required'],
     },
     refreshToken: {
       type: String,
@@ -51,10 +51,22 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  this.password = bcrypt.hash(this.password, 8);
-  next();
+// userSchema.pre('save', async function (next) {
+//   if (!this.isModified('password')) return next();
+//   this.password = await bcrypt.hash(this.password, 8);
+//   next();
+// });
+userSchema.pre("save", async function () {
+  // console.log("🔥 PRE SAVE HOOK RUNNING");
+
+  if (!this.isModified("password")) {
+    // console.log("Password not modified");
+    return;
+  }
+
+  // console.log("Hashing password...");
+  this.password = await bcrypt.hash(this.password, 8);
+  // console.log("Password hashed");
 });
 
 userSchema.methods.isPasswordCorrect = async function (password) {
